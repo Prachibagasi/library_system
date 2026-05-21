@@ -1,8 +1,6 @@
 # 📚 The New Library
 
-A stunning, feature-rich **Library Management System** built with a FastAPI backend, secure SQLite database storage, dynamic server-side Jinja2 HTML templates, and integrated OpenAI LLM recommendations. 
-
-Designed with modern UI aesthetics—including a responsive dark mode layout, smooth glassmorphism navigation, harmonized HSL color gradients, and micro-interactive card transitions.
+A full-stack l**ibrary management system** built using FastAPI, SQLite, SQLAlchemy, and Jinja2 templates. The application supports authentication, book borrowing, admin management, and AI-powered book recommendations.
 
 ---
 
@@ -24,6 +22,9 @@ Designed with modern UI aesthetics—including a responsive dark mode layout, sm
 - **Frontend Templates:** [Jinja2](https://jinja.palletsprojects.com/) + Vanilla CSS (CSS variables, Custom HSL palettes, outfits typography)
 - **AI Integrations:** [OpenAI API](https://platform.openai.com/) (GPT Models)
 - **Authentication:** JWT tokens + Hashing
+
+---
+## Screenshot
 
 ---
 
@@ -118,4 +119,14 @@ library_system/
 ├── main.py                    # FastAPI route mappings and controllers
 ├── requirements.txt           # Main python dependency manifest
 └── .gitignore                 # Standard file exclusion layout
+```
+## Future Improvements
+```
+postgreSQL integration
+Email notifications
+Deployment on Render/Railway
+```
+## Author
+```
+Prachi Bagasi
 ```

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="margin-bottom: 2rem;">
+    <h2 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Welcome, {{ user.username }}</h2>
+    <p style="color: var(--text-muted);">Manage your borrowed books and discover new ones.</p>
+</div>
+
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+    <!-- Borrowed Books -->
+    <div>
+        <h3 style="margin-bottom: 1rem; font-size: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">Currently Borrowed</h3>
+        
+        {% if borrowed_books %}
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                {% for history in borrowed_books %}
+                <div class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem;">
+                    <div>
+                        <h4 style="font-size: 1.25rem; margin-bottom: 0.25rem;">{{ history.book.title }}</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">Borrowed on: {{ history.borrow_date }}</p>
+                    </div>
+                    <form action="/return/{{ history.id }}" method="POST">
+                        <button type="submit" class="btn btn-primary" style="background: linear-gradient(135deg, var(--secondary), #be185d);">Return</button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="card" style="text-align: center; padding: 3rem;">
+                <p style="color: var(--text-muted); margin-bottom: 1rem;">You don't have any books currently borrowed.</p>
+                <a href="/" class="btn btn-primary">Browse Catalog</a>
+            </div>
+        {% endif %}
+    </div>
+    
+    <!-- AI Recommendations -->
+    <div>
+        <div class="card" style="background: linear-gradient(145deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.8)); border: 1px solid rgba(99, 102, 241, 0.3);">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                <span style="font-size: 1.5rem;">✨</span>
+                <h3 style="font-size: 1.25rem; background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">AI Picks for You</h3>
+            </div>
+            
+            {% if recommendations %}
+                <ul style="list-style: none;">
+                    {% for rec in recommendations %}
+                        <li style="margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem;">
+                            <h4 style="margin-bottom: 0.25rem;">{{ rec.title }}</h4>
+                            <p style="color: var(--text-muted); font-size: 0.875rem;">{{ rec.reason }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p style="color: var(--text-muted); font-size: 0.875rem; line-height: 1.5;">
+                    Borrow more books to get personalized recommendations powered by AI!
+                </p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

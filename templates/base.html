@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The New Library</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav>
+        <a href="/" class="brand">The New Library</a>
+        <div class="links">
+            <a href="/">Catalog</a>
+            {% if user %}
+                <a href="/dashboard">Dashboard</a>
+                {% if user.role == 'admin' %}
+                    <a href="/admin">Admin Area</a>
+                {% endif %}
+                <a href="/logout">Logout ({{ user.username }})</a>
+            {% else %}
+                <a href="/login" class="btn btn-primary" style="padding: 0.5rem 1rem;">Login</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card" style="display: flex; gap: 3rem; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 300px;">
+        {% if book.cover_image_url %}
+            <img src="{{ book.cover_image_url }}" alt="{{ book.title }} cover" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);">
+        {% else %}
+            <div style="width: 100%; height: 400px; background: var(--surface-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--text-muted);">
+                No Cover
+            </div>
+        {% endif %}
+    </div>
+    
+    <div style="flex: 2; min-width: 300px;">
+        <h1 style="font-size: 3rem; margin-bottom: 0.5rem; background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">{{ book.title }}</h1>
+        <h3 style="color: var(--text-muted); margin-bottom: 1rem; font-size: 1.5rem;">By {{ book.author }}</h3>
+        
+        <div style="margin-bottom: 2rem;">
+            <span class="badge" style="background: rgba(255,255,255,0.1); color: var(--text);">{{ book.genre }}</span>
+        </div>
+        
+        <p style="line-height: 1.6; margin-bottom: 2rem; font-size: 1.1rem;">
+            {{ book.description }}
+        </p>
+        
+        <div style="background: rgba(15, 23, 42, 0.5); padding: 1.5rem; border-radius: 12px; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+                <p style="color: var(--text-muted); margin-bottom: 0.25rem;">Availability</p>
+                {% if book.available_copies > 0 %}
+                    <p style="font-size: 1.25rem; font-weight: 700; color: var(--success);">{{ book.available_copies }} of {{ book.total_copies }} Copies Available</p>
+                {% else %}
+                    <p style="font-size: 1.25rem; font-weight: 700; color: var(--danger);">Currently Out of Stock</p>
+                {% endif %}
+            </div>
+            
+            {% if user %}
+                {% if book.available_copies > 0 %}
+                    <form action="/borrow/{{ book.id }}" method="POST">
+                        <button type="submit" class="btn btn-primary">Borrow Book</button>
+                    </form>
+                {% else %}
+                    <button class="btn" style="background: var(--surface-light); color: var(--text-muted); cursor: not-allowed;" disabled>Borrow Book</button>
+                {% endif %}
+            {% else %}
+                <a href="/login" class="btn btn-primary">Log in to Borrow</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% if similar_books %}
+<div style="margin-top: 4rem;">
+    <h2 style="font-size: 2rem; margin-bottom: 2rem; background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">Similar Books You Might Like</h2>
+    
+    <div class="book-grid">
+        {% for sim_book in similar_books %}
+        <div class="card book-card" style="padding: 1.5rem;">
+            {% if sim_book.cover_image_url %}
+                <img src="{{ sim_book.cover_image_url }}" alt="{{ sim_book.title }} cover" class="book-cover" style="height: 250px;">
+            {% else %}
+                <div class="book-cover" style="height: 250px; background: var(--surface-light); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--text-muted);">
+                    No Cover
+                </div>
+            {% endif %}
+            
+            <h3 style="margin-bottom: 0.25rem; font-size: 1.1rem; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{ sim_book.title }}</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.9rem; flex-grow: 1;">{{ sim_book.author }}</p>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="badge" style="background: rgba(255,255,255,0.1); color: var(--text); font-size: 0.7rem;">{{ sim_book.genre }}</span>
+                <a href="/book/{{ sim_book.id }}" class="btn btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: 6px;">View Details</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

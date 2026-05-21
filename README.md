@@ -25,7 +25,8 @@ A full-stack l**ibrary management system** built using FastAPI, SQLite, SQLAlche
 
 ---
 ## Screenshot
-
+<img src="screenshots/landing page.png" >
+<img src="screenshots/books.png">
 ---
 
 ## 🚀 Getting Started

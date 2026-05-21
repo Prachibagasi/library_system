@@ -24,6 +24,12 @@ A full-stack l**ibrary management system** built using FastAPI, SQLite, SQLAlche
 - **Authentication:** JWT tokens + Hashing
 
 ---
+
+## Development Workflow
+This project was built using Python, SQL, and modern AI-assisted development workflows in Google Antigravity IDE.  
+AI tools were used to accelerate prototyping, debugging, documentation, and iterative feature development.
+
+---
 ## Screenshot
 ### Home Page
 ![Home Page](screenshots/landing_page.png)
